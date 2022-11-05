@@ -13,7 +13,7 @@ test('create happy path', async () => {
         likes: 123
     }
     const response = await axios.post('http://localhost:3003/api/blogs', blog)
-    expect(response.status).toBe(200)
+    expect(response.status).toBe(201)
 
     // const personCreated = response.data
     // expect(personCreated.id).not.toBe(0)
