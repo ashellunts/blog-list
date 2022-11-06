@@ -1,21 +1,35 @@
 const axios = require('axios')
 
-// test('get all', async () => {
-//     const response = await axios.get('http://localhost:3003/api/persons')
-//     expect(response.status).toBe(200)
-// });
+const blog = {
+    title: "Foobar blog",
+    author: "BarFoo blog",
+    url: "http://foo.bar",
+    likes: 123
+}
 
-test('create happy path', async () => {
-    const blog = {
-        title: "Foobar blog",
-        author: "BarFoo blog",
-        url: "http://foo.bar",
-        likes: 123
-    }
+test('get all blogs', async () => {
+    const response = await axios.get('http://localhost:3003/api/blogs')
+    expect(response.status).toBe(200)
+
+    const firstBlog = response.data[0]
+    expect(blog).toEqual({
+        title: firstBlog.title,
+        author: firstBlog.author,
+        url: firstBlog.url,
+        likes: firstBlog.likes,
+    })
+})
+
+test('create blog', async () => {
     const response = await axios.post('http://localhost:3003/api/blogs', blog)
     expect(response.status).toBe(201)
 
-    // const personCreated = response.data
-    // expect(personCreated.id).not.toBe(0)
-    // expect(person).toEqual({ name: personCreated.name, number: personCreated.number });
-});
+    const blogCreated = response.data
+    expect(blogCreated._id).toBeDefined()
+    expect(blog).toEqual({
+        title: blogCreated.title,
+        author: blogCreated.author,
+        url: blogCreated.url,
+        likes: blogCreated.likes,
+    })
+})
