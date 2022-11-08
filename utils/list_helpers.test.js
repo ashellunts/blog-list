@@ -29,14 +29,9 @@ const listWithTwoBlog = [
     }
 ]
 
-test('dummy returns 1', () => {
-    blogList = []
-    expect(listHelper.dummy(blogList)).toBe(1)
-})
-
 describe('favorite blog', () => {
     test('from empty list returns null', () => {
-        blogList = []
+        const blogList = []
         const favoriteBlog = listHelper.favoriteBlog(blogList)
         expect(favoriteBlog).toBe(null)
     })
