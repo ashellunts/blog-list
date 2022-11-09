@@ -33,4 +33,29 @@ function mostBlogs(blogList) {
     return mostBlogsAuthor
 }
 
-module.exports = { totalLikes, favoriteBlog, mostBlogs }
+function mostLikes(blogList) {
+    if (blogList.length == 0)
+        return null
+
+
+    const authorsLikes = blogList.reduce((acc, blog) => {
+        acc[blog.author] =
+            acc[blog.author]
+                ? acc[blog.author] += blog.likes
+                : blog.likes;
+        return acc;
+    }, {});
+
+    const authorsLikesSorted =
+        Object
+            .keys(authorsLikes)
+            .map((key) => { return { author: key, likes: authorsLikes[key] } })
+            .sort((a, b) => b.likes - a.likes);
+
+    return {
+        author: authorsLikesSorted[0].author,
+        likes: authorsLikesSorted[0].likes
+    }
+}
+
+module.exports = { totalLikes, favoriteBlog, mostBlogs, mostLikes }
