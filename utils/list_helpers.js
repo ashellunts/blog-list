@@ -1,3 +1,5 @@
+var _ = require('lodash')
+
 function totalLikes(blogList) {
     const reducer = (prevValue, curValue) => prevValue + curValue.likes
 
@@ -20,17 +22,12 @@ function mostBlogs(blogList) {
     if (blogList.length == 0) {
         return null
     }
-    const blogsByAuthors = {}
     const mostBlogsAuthor = { author: blogList[0].author, blogs: 1 }
-    for (const blog of blogList) {
-        if (blogsByAuthors[blog.author] === undefined) {
-            blogsByAuthors[blog.author] = 1
-        } else {
-            blogsByAuthors[blog.author] += 1
-        }
-        if (mostBlogsAuthor.blogs < blogsByAuthors[blog.author]) {
-            mostBlogsAuthor.author = blog.author
-            mostBlogsAuthor.blogs = blogsByAuthors[blog.author]
+    const blogsCountByAuthor = _.countBy(blogList, 'author')
+    for (const [author, blogs] of Object.entries(blogsCountByAuthor)) {
+        if (mostBlogsAuthor.blogs < blogs) {
+            mostBlogsAuthor.author = author
+            mostBlogsAuthor.blogs = blogs
         }
     }
     return mostBlogsAuthor
